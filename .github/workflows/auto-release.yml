@@ -7,13 +7,15 @@ jobs:
   build:
     name: Publish binaries
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build
       run: echo 'Hello World' > to_upload-0.1.txt
     - name: Upload binaries to release
-      uses: ncipollo/release-action@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        artifacts: "to_upload-*.txt"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: to_upload-*.txt
+        tag: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
